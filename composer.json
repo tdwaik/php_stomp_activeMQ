@@ -1,0 +1,10 @@
+{
+    "name": "Libs/AMQ",
+    "authors": [
+        {
+            "name": "Thaer Aldwaik",
+            "email": "t_dwaik@hotmail.com"
+        }
+    ],
+    "require": {}
+}

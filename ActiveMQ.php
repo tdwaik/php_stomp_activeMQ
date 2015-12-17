@@ -1,5 +1,5 @@
 <?php
-
+namespace Libs\AMQ;
 /**
  * @author Thaer AlDwaik <t_dwaik@hotmail.com>
  * @since November 18, 2015

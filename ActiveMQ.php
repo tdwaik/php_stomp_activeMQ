@@ -8,6 +8,7 @@ namespace Libs\AMQ;
 
 /**
  * Class ActiveMQ
+ * @package Libs\AMQ
  */
 class ActiveMQ {
 
@@ -188,7 +189,7 @@ class ActiveMQ {
     /**
      * @param $persistent
      * @return $this
-     * @throws Exception
+     * @throws \Exception
      */
     public function persistent($persistent) {
         if($persistent == true)
@@ -196,13 +197,13 @@ class ActiveMQ {
         elseif ($persistent == false) {
             $this->persistent = 'false';
         }else {
-            throw new Exception("Error: Wrong Persistent value, only (true, false) accepted");
+            throw new \Exception("Error: Wrong Persistent value, only (true, false) accepted");
         }
         return $this;
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function createMessage() {
         try {
@@ -212,7 +213,7 @@ class ActiveMQ {
             }
 
             return $activeMqMessage;
-        }catch(Exception $e) {
+        }catch(\Exception $e) {
             throw $e;
         }
 	}
@@ -220,7 +221,7 @@ class ActiveMQ {
     /**
      * @param $destination
      * @param array $header
-     * @throws Exception
+     * @throws \Exception
      */
     public function subscribe($destination, $header = array()) {
         try {
@@ -229,7 +230,7 @@ class ActiveMQ {
                 $this->subscribedDestination = $destination;
             }
             return $this;
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             throw $e;
         }
     }
@@ -237,26 +238,26 @@ class ActiveMQ {
     /**
      * @param $destination
      * @param array $header
-     * @throws Exception
+     * @throws \Exception
      */
     public function unsubscribe($destination, $header = array()) {
         try {
             $this->stomp->unsubscribe($destination, $header);
             return $this;
-        }catch (Exception $e) {
+        }catch (\xception $e) {
             throw $e;
         }
     }
 
     /**
      * @param $frame
-     * @throws Exception
+     * @throws \Exception
      */
     public function ack($frame) {
         try {
             $this->stomp->ack($frame);
             return $this;
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             throw $e;
         }
     }
@@ -264,12 +265,11 @@ class ActiveMQ {
     /**
      * @param null $destination
      * @param bool $ack
-     * @return \StompFrame
-     * @throws Exception
+     * @throws \Exception
      */
     public function getMessage($destination = null, $ack = true) {
         if($this->subscribedDestination === null && $destination === null) {
-            throw new Exception("Error: No destination registered to listen !, please subscribe a destination first");
+            throw new \Exception("Error: No destination registered to listen !, please subscribe a destination first");
         }
         try {
             if($destination != null && $this->subscribedDestination != $destination) {
@@ -283,13 +283,13 @@ class ActiveMQ {
             }
 
             return $frame;
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             throw $e;
         }
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function connect() {
 		try {
@@ -297,7 +297,7 @@ class ActiveMQ {
             $this->stomp = new \Stomp($connectionUrl, $this->user, $this->password);
 
 			return $this;
-		}catch(Exception $e) {
+		}catch(\Exception $e) {
             if($this->retryNumber < $this->connectRetryCount) {
                 $this->retryNumber++;
                 $this->connect();

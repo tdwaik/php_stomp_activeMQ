@@ -8,6 +8,7 @@ namespace Libs\AMQ;
 
 /**
  * Class ActiveMqMessage
+ * @package Libs\AMQ
  */
 class ActiveMqMessage {
 
@@ -133,7 +134,7 @@ class ActiveMqMessage {
     /**
      * @param $persistent
      * @return $this
-     * @throws Exception
+     * @throws \Exception
      */
     public function persistent($persistent) {
         if($persistent == true)
@@ -141,7 +142,7 @@ class ActiveMqMessage {
         elseif ($persistent == false) {
             $this->persistent = 'false';
         }else {
-            throw new Exception("Error: Wrong Persistent value, only (true, false) accepted");
+            throw new \Exception("Error: Wrong Persistent value, only (true, false) accepted");
         }
         return $this;
     }
@@ -194,17 +195,17 @@ class ActiveMqMessage {
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function send() {
         $destination = $this->destination;
         if(empty($destination)) {
-            throw new Exception('Queue destination empty');
+            throw new \Exception('Queue destination empty');
         }
         
         try {
             return $this->stomp->send($destination, $this->body, $this->_getHeaders());
-        }catch(Exception $e) {
+        }catch(\Exception $e) {
             throw $e;
         }
     }
